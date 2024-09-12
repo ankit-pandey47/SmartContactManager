@@ -54,7 +54,7 @@
       <th  th:text="${c.cId}" scope="row"></th>
       
       <td>
-    <img  class="my_profile_picture" src="" th:src="@{'/images/' + ${c.imageUrl}}" alt="profile-photo">
+    <img  class="my_profile_picture" src="" th:src="@{ ${c.imageUrl}}" alt="profile-photo">
   
         <span  th:text="${c.name}"></span></td>
       
