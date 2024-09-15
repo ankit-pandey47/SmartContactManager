@@ -1,6 +1,8 @@
 package com.project.Controller;
 
 
+import java.security.SecureRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.Entities.User;
 import com.project.Helper.Message;
+import com.project.Service.CloudinaryImageService;
+import com.project.Service.EmailService;
 import com.project.dao.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,12 +25,19 @@ import jakarta.validation.Valid;
 @Controller
 public class HomeController {
 	
+	SecureRandom random = new SecureRandom();
+	
+	@Autowired
+	private CloudinaryImageService cloudinaryImageService;
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private EmailService emailservice;
 	
 
 	@GetMapping("/")
@@ -49,6 +60,9 @@ public class HomeController {
 		return "signup";
 	}
 	
+	
+
+	
 	//this handler for registering
 	@PostMapping("/do_register")
 	public String registerUser(@Valid
@@ -64,10 +78,35 @@ public class HomeController {
 			}
 			
 		if(!agreement) {
-		System.out.println("You have ot agreed to terms and conditions");
-		 throw new Exception("You have not agreed to terms and conditions");
+		System.out.println("You have not agreed to terms and conditions");
+		 throw new Exception("You have nnot agreed to terms and conditions");
 				
 			}
+		
+		int otp1 = random.nextInt(999999);
+		String otp = String.valueOf(otp1);
+		
+		System.out.println(otp);
+		
+		//write code for send otp to mail
+		
+		
+		String receiver = user.getEmail();
+		String subject = "Smart Contact Manager";
+
+				    
+		String content = 
+				"Hello,\n\n" +
+			    "Thank you for using SmartContactManager. Here is the code you requested to confirm your account: "+ otp + 
+			    "\n\nThis code will remain active for the next 10 minutes. Please use it on our site or app to proceed." + 
+			    "\n\nIf you did not request this code, you can ignore this message." + 
+			    "\n\nFor any questions or assistance, feel free to contact us here at this gmail" + 
+			    "\n\nBest regards,\nAnkit Raj\nSmartContactManager Support Team";
+
+	
+		this.emailservice.sendMail(receiver, subject, content);
+		
+		
 		
 		
 			
@@ -80,16 +119,20 @@ public class HomeController {
 			System.out.println("Agreement" + agreement);
 			System.out.println("USER" + user);
 			
-			User resultUser =this.userRepository.save(user);
+			model.addAttribute("user" , user);
+			model.addAttribute("otp" , otp);
+			return "code_verify";
+			
+			//User resultUser =this.userRepository.save(user);
 			
 			
-		  model.addAttribute("user" , new User());
+//		  model.addAttribute("user" , new User());
+//		  
+//		  session.removeAttribute("message"); //remove message already appearing for past
+//		  session.setAttribute("message", new Message("Successfully registerd","alert-success"));
+//		  
 		  
-		  session.removeAttribute("message"); //remove message already appearing for past
-		  session.setAttribute("message", new Message("Successfully registerd","alert-success"));
-		  
-		  
-			return "signup";
+			
 
 			
 			
@@ -101,11 +144,37 @@ public class HomeController {
 			session.removeAttribute("message"); //remove message already appearing for past
 			session.setAttribute("message", new Message("Something Went Wrong!!"+e.toString(),"alert-danger"));
 			
-			
+			 
 			return "signup";
 		}
 		
 		}
+	
+	@PostMapping("/handle_user")
+	public String handleuser(@ModelAttribute("user")User user , @RequestParam("orgcode")String orgcode , @RequestParam("inpcode")String code ,  Model model , HttpSession session) {
+		
+		System.out.println(orgcode);
+		System.out.println(code);
+		
+		if(orgcode.equals(code)) {
+			session.setAttribute("message", new Message("Succesfully registered" , "alert-success"));
+			try {
+				
+				this.userRepository.save(user);
+			}catch(Exception e) {
+				session.removeAttribute("message"); //remove message already appearing for past
+				session.setAttribute("message", new Message("Something Went Wrong!!"+e.toString(),"alert-danger"));
+			}
+			return "signup";
+		}
+		else {
+			System.out.println("Hello");
+			model.addAttribute("user" , user);
+			return "code_verify";
+		}
+		
+		
+	}
 	
 	
 	

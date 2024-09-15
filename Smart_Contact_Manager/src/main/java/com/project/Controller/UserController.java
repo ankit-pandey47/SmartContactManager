@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.Entities.Contact;
 import com.project.Entities.User;
 import com.project.Helper.Message;
+import com.project.Service.CloudinaryImageService;
 import com.project.dao.UserRepository;
 import com.project.dao.contactRepository;
 import com.razorpay.Order;
@@ -48,6 +49,8 @@ public class UserController {
 	public contactRepository contactRepository;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private CloudinaryImageService cloudinaryImageService;
 	
 	
 	@ModelAttribute   //it will run always
@@ -84,22 +87,30 @@ public class UserController {
 			String name = principal.getName();
 			User user = userRepository.getUserByUserName(name);
 			
+			String imageurl = "https://www.pngmart.com/files/23/Profile-PNG-Photo.png";
 			
 			//procesingand uploadinf file
 			if(file.isEmpty()) {
 				
 				//by default image
-				contact.setImageUrl("default.png");
+				contact.setImageUrl(imageurl);
 			}
 			else {
 				
-				String fileName =file.getOriginalFilename();
-	            contact.setImageUrl(fileName);
-
-	            String UPLOAD_DIR = Paths.get("src/main/resources/static/images").toAbsolutePath().toString();	
+//				String fileName =file.getOriginalFilename();
+//	            contact.setImageUrl(fileName);
+//
+//	            String UPLOAD_DIR = Paths.get("src/main/resources/static/images").toAbsolutePath().toString();	
+//				
+//			Files.copy(file.getInputStream(), Path.of(UPLOAD_DIR + "\\" + file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
 				
-			Files.copy(file.getInputStream(), Path.of(UPLOAD_DIR + "\\" + file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
 				
+				
+				//save the data cloudinary and save then get link from there and then save it in database
+				
+				Map data = this.cloudinaryImageService.upload(file);
+				String url = (String) data.get("url");
+				contact.setImageUrl(url);
 			}
 			
 			
@@ -107,6 +118,7 @@ public class UserController {
 			user.getContacts().add(contact); // add the contact to the user
 			contact.setUser(user); // set the userid to the contact databse
 			userRepository.save(user);
+			contactRepository.save(contact);
 	
 			System.out.println(contact.imageUrl);
 			

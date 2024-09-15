@@ -33,7 +33,7 @@ public class MyConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(requests -> requests.requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/user/**").hasRole("USER").requestMatchers("/**").permitAll()).formLogin(login -> login
+        http.authorizeHttpRequests(requests -> requests.requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/user/**").hasRole("USER").requestMatchers("/**" , "/cloudinary/upload").permitAll()).formLogin(login -> login
                 .loginPage("/signin")
                 .loginProcessingUrl("/dologin")
                 .defaultSuccessUrl("/user/dashboard")
