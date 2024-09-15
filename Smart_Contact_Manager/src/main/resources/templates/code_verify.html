@@ -16,7 +16,7 @@
   
   
     <section >
-     <div class="container mt-4 "  style="max-width: 500px; margin: auto;">
+     <div class="container mt-4 "  style="max-width: 500px; margin: auto;" >
      <div class="container mr-3 ">
     <div class="card" style="padding: 15px;">
     <div class="card-body">
@@ -45,43 +45,12 @@
     </div>
     
     </div>
-   
-     </div>
-    
-    </section>
-plz make the cntaienr or card as snall or fit>
-    <div class="card">
-    <div class="card-body">
-    
-    <form action="#" th:action="@{/handle_user}" method="post" th:object="${user}">
-            <!-- Hidden fields for user data -->
-            <input type="hidden" name="id" th:value="${user.id}" />
-            <input type="hidden" name="email" th:value="${user.email}" />
-            <input type="hidden" name="name" th:value="${user.name}" />
-            <input type="hidden" name="password" th:value="${user.password}" />
-             <input type="hidden" name="imageUrl" th:value="${user.imageUrl}" />
-             <input type="hidden" name="enabled" th:value="${user.enabled}" />
-              <input type="hidden" name="about" th:value="${user.about}" />
-               <input type="hidden" name="role" th:value="${user.role}" />
-                <input type="hidden" name="orgcode" th:value="${otp}" />
-               
-            <!-- Add other fields as necessary -->
-            
-            <h6>Enter the Verification Code sent to your account</h6>
-            <input type="text" placeholder="Enter code here" name="inpcode">
-            
-
-            <!-- Submit button -->
-           <br /> <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-    </div>
-    
-    </div>
-   
+   </div>
      </div>
     
     </section>
 
+    
 
 
 

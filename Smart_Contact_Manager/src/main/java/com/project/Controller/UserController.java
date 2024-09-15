@@ -118,7 +118,7 @@ public class UserController {
 			user.getContacts().add(contact); // add the contact to the user
 			contact.setUser(user); // set the userid to the contact databse
 			userRepository.save(user);
-			contactRepository.save(contact);
+			
 	
 			System.out.println(contact.imageUrl);
 			

@@ -108,11 +108,12 @@ public class HomeController {
 		
 		
 		
+		String imageurl = "https://www.pngmart.com/files/23/Profile-PNG-Photo.png";
 		
 			
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
-			user.setImageUrl("default.png");	
+			user.setImageUrl(imageurl);	
 			
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			
