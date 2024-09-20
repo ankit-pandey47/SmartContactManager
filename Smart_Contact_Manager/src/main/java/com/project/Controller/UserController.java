@@ -107,8 +107,8 @@ public class UserController {
 				
 				
 				//save the data cloudinary and save then get link from there and then save it in database
-				
-				Map data = this.cloudinaryImageService.upload(file);
+				@SuppressWarnings("unchecked")
+				Map<String , Object> data = this.cloudinaryImageService.upload(file);
 				String url = (String) data.get("url");
 				contact.setImageUrl(url);
 			}
@@ -130,7 +130,7 @@ public class UserController {
 		}catch(Exception e) {
 			
 			session.setAttribute("message", new Message("Something went wrong !! Try Again" , "alert-danger"));
-			System.out.println(e.getMessage());
+			System.out.println(e.getLocalizedMessage());
 			
 		}
 		
