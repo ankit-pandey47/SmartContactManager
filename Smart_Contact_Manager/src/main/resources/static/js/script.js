@@ -16,7 +16,7 @@ const searchkro=()=>{
 
     let baseUrl = window.location.origin.includes("localhost") 
     ? "http://localhost:8080" 
-    : "https://your-deployed-backend-url.com";
+    : "https://smartcontactmanager-production-ankit.up.railway.app";
 
 
     if(query== ""){
