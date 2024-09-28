@@ -311,6 +311,12 @@ public class UserController {
     	return "redirect:/user/dashboard";
     }
     
+    @GetMapping("/donate")
+    public String donatePage(Model model) {
+    	
+    	model.addAttribute("title" , "Donate-page");
+    	return "normal/donate";
+    }
     
     
     //creating order for payment
@@ -360,6 +366,34 @@ public class UserController {
         mymap.put("razorKeyId",razorKeyId );
         mymap.put("razorKeySecret",razorKeySecret );
         return mymap;
+    }
+    
+    
+    
+    
+    
+    //TO DELETE THE USERS ACCOUNT
+    @GetMapping("/deleteaccount")
+    public String deleteAccount(Principal principal , Model model) {
+    	
+    	User user = this.userRepository.getUserByUserName(principal.getName());
+    	
+    	List<Contact> contacts = this.contactRepository.findContactsByUser(user.getId());
+    	
+    	for(Contact contact : contacts) {
+    		System.out.println(contact);
+    		this.contactRepository.delete(contact);
+    		
+    	}
+    	this.userRepository.save(user);
+    	
+    	this.userRepository.delete(user);
+    	
+    	
+    	
+       
+    	
+    	return "redirect:/logout";
     }
     
 	

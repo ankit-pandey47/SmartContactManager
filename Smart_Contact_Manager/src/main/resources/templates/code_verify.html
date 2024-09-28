@@ -23,7 +23,7 @@
     
     <form action="#" th:action="@{/handle_user}" method="post" th:object="${user}">
             <!-- Hidden fields for user data -->
-            <input type="hidden" name="id" th:value="${user.id}" />it
+            <input type="hidden" name="id" th:value="${user.id}" />
             <input type="hidden" name="email" th:value="${user.email}" />
             <input type="hidden" name="name" th:value="${user.name}" />
             <input type="hidden" name="password" th:value="${user.password}" />

@@ -61,7 +61,15 @@
     </tr>
     
   </tbody>
+  
+  
+  
+  
 </table>
+
+ <a href="#" th:onclick="'deleteUser(' + ${user.id} + ')'" class="btn btn-danger">Delete</a>
+ 
+ 
 </div>
 
 
@@ -80,6 +88,29 @@
       $(".item").removeClass("active");
       $("#profile-link").addClass("active")
     })
+    
+    
+    
+    
+    function deleteUser(id){
+	
+	swal({
+		  title: "Are you sure?",
+		  text: "Once deleted, you will not be able to recover your account and your saved contacts!",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {
+		    window.location="/user/deleteaccount";
+		  } else {
+		    swal("Your Account is safe!");
+		  }
+		});
+	
+}
+    
     
     </script>
     

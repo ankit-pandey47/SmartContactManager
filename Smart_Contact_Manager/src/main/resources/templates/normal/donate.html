@@ -22,14 +22,18 @@
     <div class="card-body">
     <div class="container text-center">
     
-    <img  style="height:210px ; width:210px" class="my_profile_picture " src="" th:src="@{'/images/contactlogo.jpeg'}" alt="profile-photo">
+    <img  style="height:210px ; width:210px" class="my_profile_picture " src="" th:src="@{'/images/donate.jpg'}" alt="profile-photo">
     </div>
     
-    <h1 class="text-center font-italic mt-2">Start Adding your contacts on the cloud...</h1>
-    
-    <a th:href="@{/user/add-contact}" class="btn btn-primary btn-block mt-4 mb-3"> Add new contact</a>
-    
    
+    
+    <h3 class="my-3">Donate</h3>
+    <input id="payment_field" type="text" class="form-control" placeholder="Enter amount here" >
+    
+    <div class="container text-center mt-3">
+          <div onClick="paymentStart()" class="btn btn-success btn-block">Checkout </div>
+     
+    </div>
     
     
     </div>
@@ -42,7 +46,7 @@
     
     $(document).ready(()=>{
       $(".item").removeClass("active");
-      $("#home-link").addClass("active")
+      $("#support-link").addClass("active")
     })
     
     

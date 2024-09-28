@@ -103,7 +103,7 @@ public class Contact {
 		this.description = description;
 	}
 
-	//@Override
+//	@Override
 //	public String toString() {
 //		return "Contact [cId=" + cId + ", name=" + name + ", email=" + email + ", secondName=" + secondName + ", work="
 //				+ work + ", phone=" + phone + ", imageUrl=" + imageUrl + ", description=" + description + ", user="
@@ -114,7 +114,7 @@ public class Contact {
 //				+ super.toString() + "]";
 //	}
 //	
-//	
+	
 	
 	
 	
