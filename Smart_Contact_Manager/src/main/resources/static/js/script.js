@@ -25,7 +25,7 @@ const searchkro=()=>{
          
          console.log(query);
         //sending request to server
-         let url = `http://localhost:8082/search/${query}`
+         let url = `http://localhost:8080/search/${query}`
          fetch(url)
          .then((response)=>{
             return response.json();
