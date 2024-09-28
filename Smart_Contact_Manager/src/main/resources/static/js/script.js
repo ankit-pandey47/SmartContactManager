@@ -14,8 +14,11 @@ const toggleSidebar = () => {
 
 const searchkro=()=>{
 
-    let query = $("#search-input").val();
-    
+    let baseUrl = window.location.origin.includes("localhost") 
+    ? "http://localhost:8080" 
+    : "https://your-deployed-backend-url.com";
+
+
     if(query== ""){
         $(".search-result").hide();
 
@@ -25,7 +28,8 @@ const searchkro=()=>{
          
          console.log(query);
         //sending request to server
-         let url = `http://localhost:8080/search/${query}`
+        let url = `${baseUrl}/search/${query}`;
+    
          fetch(url)
          .then((response)=>{
             return response.json();
