@@ -14,22 +14,24 @@ const toggleSidebar = () => {
 
 const searchkro=()=>{
 
+    let query = $("#search-input").val();
+    
     let baseUrl = window.location.origin.includes("localhost") 
     ? "http://localhost:8080" 
     : "https://smartcontactmanager-production-ankit.up.railway.app";
 
 
+    
     if(query== ""){
         $(".search-result").hide();
 
     }
     else{
         
-         
+         let url = `${baseUrl}/search/${query}`;
          console.log(query);
         //sending request to server
-        let url = `${baseUrl}/search/${query}`;
-    
+         
          fetch(url)
          .then((response)=>{
             return response.json();
