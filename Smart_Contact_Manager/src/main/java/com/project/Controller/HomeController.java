@@ -171,6 +171,7 @@ public class HomeController {
 		else {
 			System.out.println("Hello");
 			model.addAttribute("user" , user);
+			model.addAttribute("otp" , orgcode);
 			return "code_verify";
 		}
 		
